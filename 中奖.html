@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>标题</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<!-- <link rel="stylesheet" href="reset.css"> -->
+	<style>
+		*{margin: 0;padding: 0;}
+		#box{
+			font-size: 22px;
+			width: 300px;
+			height: 150px;
+			line-height: 130px;
+			text-align: center;
+			border: 10px dotted #000;
+			box-sizing: border-box;
+			margin: 50px 0 0 50px;
+		}
+		#cvs{
+			position: absolute;
+			left: 50px;
+			top: 50px;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">一等奖</div>
+	<canvas id="cvs" width="300" height="150"></canvas>
+</body>
+<script type="text/javascript">
+	var box=document.getElementById('box');
+	var cvs=document.getElementById('cvs');
+	var ctx=cvs.getContext('2d');
+	
+	ctx.beginPath();
+	ctx.fillStyle="#ccc";
+	ctx.fillRect(0,0,300,150);
+	ctx.closePath();
+
+	ctx.globalCompositeOperation="destination-out";
+	cvs.onmousedown=function  (ev) {
+		var e=ev||window.event;
+		if (e.preventDefault) {
+			e.preventDefault();
+		}else{
+			e.returnValue=false;
+		};
+		cvs.onmousemove=function (ev){
+			var e=ev||window.event;
+			if (e.preventDefault) {
+				e.preventDefault();
+			}else{
+				e.returnValue=false;
+			};
+			var x=e.clientX-cvs.offsetLeft;
+			var y=e.clientY-cvs.offsetTop;
+			ctx.beginPath();
+			ctx.arc(x,y,5,0,Math.PI*2,true);
+			ctx.fillStyle="#fff";
+			ctx.lineWidth="5";
+			ctx.fill();
+
+		}
+		cvs.onmouseup=function (){
+			cvs.onmousemove=null;
+		}
+		ctx.closePath();
+	}
+</script>
+</html>
